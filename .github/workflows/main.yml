@@ -15,11 +15,6 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  install: 
-   runs-on: ubuntu-latest
-   steps:
-    - name: install packages
-      run: sudo pip install scrypt construct==2.5.2
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
@@ -29,11 +24,15 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
+      
+      # Install scrypt and construct
+      - name: install packages
+        run: sudo pip install scrypt construct==2.5.2
+        
+      # Test genesis.py
       - name: Run Genesis Block for Litecoin
         run: python genesis.py -a scrypt -z "NY Times 05/Oct/2011 Steve Jobs, Apple’s Visionary, Dies at 56" -p "040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4d4604fa08dce601aaf0f470216fe1b51850b4acf21b179c45070ac7b03a9" -t 1317972665 -n 2084524493
 
-      # Runs a set of commands using the runners shell
+      # Gblock HC
       - name: Run Genesis Block for HawkCoin
         run: python genesis.py -a scrypt -z "Tue, Dec 14 2021, Hawk coin Lmfao" -p "040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4d4604fa08dce601aaf0f470216fe1b51850b4acf21b179c45070ac7b03a9" -t 1639505734
